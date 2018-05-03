@@ -1,0 +1,163 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for your ansible user on the RHEL Virtual Machine."
+      }
+    }
+  },
+  "variables": {
+    "computeResouresApiVersion": "2016-04-30-preview",
+    "vmName": "rhel7ansible",
+    "adminUsername": "ansible",
+    "dataDisk1Name": "[concat(uniquestring(variables('vmName')), 'datadisk1')]",
+    "dataDisk2Name": "[concat(uniquestring(variables('vmName')), 'datadisk2')]",
+    "imagePublisher": "RedHat",
+    "imageOffer": "RHEL",
+    "imageSku": "7.2",
+    "OSDiskName": "[concat(uniquestring(variables('vmName')), 'osdisk')]",
+    "nicName": "[concat(uniquestring(variables('vmName')), 'nic')]",
+    "addressPrefix": "10.0.0.0/16",
+    "subnetName": "Subnet",
+    "subnetPrefix": "10.0.0.0/24",
+    "publicIPAddressName": "[concat(uniquestring(variables('vmName')), 'publicip')]",
+    "publicIPAddressType": "Dynamic",
+    "vmSize": "Standard_A2",
+    "virtualNetworkName": "[concat(uniquestring(variables('vmName')), 'vnet')]",
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2016-04-30-preview",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Tag1": "ManagedVM"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[variables('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('imagePublisher')]",
+            "offer": "[variables('imageOffer')]",
+            "sku": "[variables('imageSku')]",
+            "version": "latest"
+          },
+          "dataDisks": [
+            {
+              "name": "[variables('dataDisk1Name')]",
+              "diskSizeGB": "100",
+              "lun": 0,
+              "createOption": "Empty"
+            },
+            {
+              "name": "[variables('dataDisk2Name')]",
+              "diskSizeGB": "100",
+              "lun": 1,
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('vmName'), '/installAnsible')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('vmName')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/linuxpolska/rhsummit18-ansible-windows/master/configure_ansible.sh"
+          ],
+          "commandToExecute": "bash configure_ansible.sh"
+        }
+      }
+    }
+  ]
+}
