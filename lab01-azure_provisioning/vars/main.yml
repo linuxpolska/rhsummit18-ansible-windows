@@ -32,11 +32,7 @@ azure_virtual_network: workshopnetwork
 azure_virtual_subnet: workshopsubnet
 
 # Instance Sizes
-#azure_tower_instance_type: "Standard_A2_v2"    # Medium = 2 vCPU / 4GB
-#azure_gitlab_instance_type: "Standard_A2_v2"   # Might be able to use small...
-#azure_windc_instance_type: "Standard_A2_v2"    # t2.micro fails
-azure_windows_workstation_instance_type: "Standard_A2_v2"   # t2.small was slowwwwww...
-azure_windows_instance_type: "Standard_A2_v2"   # Small = 1 vCPU / 2GB
+azure_windows_instance_type: "Standard_A2_v2"
 
 # Ideally update to auto-pull the latest
 azure_rhel_publisher: "RedHat"
