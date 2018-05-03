@@ -1,0 +1,5 @@
+azure_client_id: ''
+azure_secret: ''
+azure_subscription_id: ''
+azure_tenant: ''
+azure_location: 'eastus'

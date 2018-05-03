@@ -55,15 +55,16 @@ You will find detailed instructions below with a generic <a href="https://docs.m
   - name: "ansible",
   - type: "web/api",
   - url: "http://ansible.net".
-* Write down **application id** (for future reference it will be **client id**).
+* Write down **application id** (for future reference it will be **azure_client_id**).
 * Enter `Settings` / `Keys` and fill in the first row with:
   - description: "ansible",
   - expires: "1y",
-* Hit `Save` and write down key **Value** (for future reference it will be **client secret**)
-* Enter `Active Directory` / `Properties` and write down **Directory ID** (for future reference it will be **tenant id**)
+* Hit `Save` and write down key **Value** (for future reference it will be **azure_secret**)
+* Enter `Active Directory` / `Properties` and write down **Directory ID** (for future reference it will be **azure_tenant_id**)
 
 ##### Authorize the ansible application to manage resources _(takes ~ 1 minute)_
-* Enter `Subscriptions` / `Azure ...` / `...(IAM)` / `Add` and fill in the form with:
+* Enter `Subscriptions` / `Azure ...` and write down **Subscription ID** (for future reference it will be **azure_subscription_id**).
+* Enter `...(IAM)` / `Add` and fill in the form with:
   - Role: owner,
   - access: ad user,
   - choose: ansible
@@ -74,9 +75,11 @@ You ansible application credentials will enable you to provision Azure resources
 ##### Verify written down Ansible application credentials _(takes ~ 1 minute)_
 Azure property name | Ansible module parameter | written down value
 --- | --- | ---
-application id | client id |
-Key Value | client secret |
-Directory ID | tenant id |
+application id | azure_client_id |
+Key Value | azure_secret |
+Subscription ID | azure_subscription_id |
+Directory ID | azure_tenant_id |
+
 
 #### Verify that all resources are set correctly (takes ~ 2 minute)
 The Azure deployment template should prepare a single RHEL virtual machine (rhel7ansible) and install the necessary tools.
