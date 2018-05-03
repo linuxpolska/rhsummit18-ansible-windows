@@ -70,7 +70,7 @@ You will find detailed instructions below with a generic <a href="https://docs.m
   - choose: ansible
 * Hit `Save`.
 
-You ansible application credentials will enable you to provision Azure resources with Ansible.
+Your "ansible" application credentials will enable you to provision Azure resources with Ansible.
 
 ##### Verify written down Ansible application credentials _(takes ~ 1 minute)_
 Azure property name | Ansible module parameter | written down value

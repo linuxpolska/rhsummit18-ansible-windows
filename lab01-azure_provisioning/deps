@@ -1,0 +1,6 @@
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+python get-pip.py
+pip install "pywinrm>=0.2.2"
+#pip install "azure==2.0.0rc5"
+#yum -y install ansible
+pip install ansible[azure]

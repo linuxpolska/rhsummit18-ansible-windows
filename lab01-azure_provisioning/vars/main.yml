@@ -1,0 +1,58 @@
+---
+##########################################################
+##################### GENERAL INFO #######################
+##########################################################
+
+# Where to provision instances (azure)
+instance_loc: azure
+name_prefix: "workshop"
+
+# Number of users and prefix for user name
+user_count: 1
+user_prefix: student
+users_password: "Ans1bl3--"
+
+# Root user (ec2-user for AWS)
+root_user: root
+root_password: MyPassw0rd21
+
+# Needed for reverse lookup DNS setup
+ptr_zone_name: "1.0.10.in-addr.arpa"
+ptr_zone_cidr: "10.0.1.0/24"
+
+##########################################################
+####################### AZURE INFO #######################
+##########################################################
+
+azure_admin_user: "ansible"
+azure_admin_pass: "@ns1blePassword"
+
+ansible_winrm_read_timeout_sec: 55
+
+azure_resource_group: workshoprg
+azure_storage_account: workshop{{ azure_client_id[:5] }}storage
+azure_storage_account_type: Standard_LRS
+azure_virtual_network: workshopnetwork
+azure_virtual_subnet: workshopsubnet
+
+# Instance Sizes
+#azure_tower_instance_type: "Standard_A2_v2"    # Medium = 2 vCPU / 4GB
+#azure_gitlab_instance_type: "Standard_A2_v2"   # Might be able to use small...
+azure_windc_instance_type: "Standard_A2_v2"    # t2.micro fails
+azure_windows_workstation_instance_type: "Standard_A2_v2"   # t2.small was slowwwwww...
+azure_windows_instance_type: "Standard_A1_v2"   # Small = 1 vCPU / 2GB
+
+# Ideally update to auto-pull the latest
+azure_rhel_publisher: "RedHat"
+azure_rhel_offer: "RHEL"
+azure_rhel_sku: "7.3"
+azure_rhel_version: "7.3.2017090723"
+
+azure_win_publisher: "MicrosoftWindowsServer"
+azure_win_offer: "WindowsServer"
+azure_win_sku: "2016-Datacenter"
+azure_win_version: "2016.127.20171217"
+
+azure_winrm_enable_script: SQBuAHYAbwBrAGUALQBFAHgAcAByAGUAcwBzAGkAbwBuACAALQBDAG8AbQBtAGEAbgBkACAAKAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABTAHkAcwB0AGUAbQAuAE4AZQB0AC4AVwBlAGIAQwBsAGkAZQBuAHQAKQAuAEQAbwB3AG4AbABvAGEAZABTAHQAcgBpAG4AZwAoACcAaAB0AHQAcABzADoALwAvAHIAYQB3AC4AZwBpAHQAaAB1AGIAdQBzAGUAcgBjAG8AbgB0AGUAbgB0AC4AYwBvAG0ALwBhAG4AcwBpAGIAbABlAC8AYQBuAHMAaQBiAGwAZQAvAGQAZQB2AGUAbAAvAGUAeABhAG0AcABsAGUAcwAvAHMAYwByAGkAcAB0AHMALwBDAG8AbgBmAGkAZwB1AHIAZQBSAGUAbQBvAHQAaQBuAGcARgBvAHIAQQBuAHMAaQBiAGwAZQAuAHAAcwAxACcAKQApADsAIABFAG4AYQBiAGwAZQAtAFcAUwBNAGEAbgBDAHIAZQBkAFMAUwBQACAALQBSAG8AbABlACAAUwBlAHIAdgBlAHIAIAAtAEYAbwByAGMAZQA=
+
+adenable: false

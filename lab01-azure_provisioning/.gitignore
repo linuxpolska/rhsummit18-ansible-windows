@@ -1,0 +1,7 @@
+*.retry
+*.log
+*.txt
+*~
+vars/custom.yml
+roles/ansible-tower/files/tower_license.json
+timings
