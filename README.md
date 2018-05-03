@@ -60,7 +60,7 @@ You will find detailed instructions below with a generic <a href="https://docs.m
   - description: "ansible",
   - expires: "1y",
 * Hit `Save` and write down key **Value** (for future reference it will be **azure_secret**)
-* Enter `Active Directory` / `Properties` and write down **Directory ID** (for future reference it will be **azure_tenant_id**)
+* Enter `Active Directory` / `Properties` and write down **Directory ID** (for future reference it will be **azure_tenant**)
 
 ##### Authorize the ansible application to manage resources _(takes ~ 1 minute)_
 * Enter `Subscriptions` / `Azure ...` and write down **Subscription ID** (for future reference it will be **azure_subscription_id**).
@@ -78,7 +78,7 @@ Azure property name | Ansible module parameter | written down value
 application id | azure_client_id |
 Key Value | azure_secret |
 Subscription ID | azure_subscription_id |
-Directory ID | azure_tenant_id |
+Directory ID | azure_tenant |
 
 
 #### Verify that all resources are set correctly (takes ~ 2 minute)
