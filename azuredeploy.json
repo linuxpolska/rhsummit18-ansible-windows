@@ -11,6 +11,8 @@
   },
   "variables": {
     "computeResouresApiVersion": "2016-04-30-preview",
+    "location": "East US",
+    "resourceGroup": "ansiblerg",
     "vmName": "rhel7ansible",
     "adminUsername": "ansible",
     "dataDisk1Name": "[concat(uniquestring(variables('vmName')), 'datadisk1')]",
