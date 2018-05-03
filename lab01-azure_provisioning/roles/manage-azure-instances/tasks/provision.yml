@@ -143,10 +143,10 @@
     ansible_winrm_server_cert_validation: "ignore"
     groups: windows
   with_items: "{{ windows_instances.results }}"
-
+git s
 ################### Create Inventories ###################
 
 - name: Generate student inventories
   template:
     src: instances.txt.j2
-    dest: ./instances.txt
+    dest: ../instances.txt
