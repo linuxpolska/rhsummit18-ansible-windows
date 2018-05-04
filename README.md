@@ -89,6 +89,9 @@ Ssh access is available via public IP as _**ansible**_ user with password of you
 Azure template installs Python, Ansible with Windows modules and dependencies. It also clones this github repository.
 
 ### Clean up after the Workshop
+
+Go to ```lab01-azure_provisioning``` and run ```./teardown.sh``` script.
+
 #### Remove deployed Azure resources
 #### Close Azure account
 #### Close outlook.com account
