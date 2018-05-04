@@ -57,7 +57,7 @@
     subscription_id: "{{ azure_subscription_id }}"
     tenant: "{{ azure_tenant }}"
     resource_group: "{{ azure_resource_group }}"
-    name: "{{ name_prefix + '-w1'}}"
+    name: "{{ name_prefix + '-w' + item }}"
     vm_size: "{{ azure_windows_instance_type }}"
     storage_account_name: "{{ azure_storage_account }}"
     admin_username: "{{ azure_admin_user }}"
@@ -76,7 +76,7 @@
       - 5985  # WinRM
       - 3389  # RDP
     tags:
-      Name: "{{ name_prefix + '-w1'}}"
+      Name: "{{ name_prefix + '-w' + item }}"
       App: AnsibleWorkshop
       User: "{{ user_prefix }}"
     image:
@@ -84,8 +84,8 @@
       offer: "{{ azure_win_offer }}"
       version: "{{ azure_win_version }}"
       sku: "{{ azure_win_sku }}"
-  with_sequence: count=1
-  register: windows1_jobs
+  with_sequence: count=2
+  register: windows_jobs
   async: 7200
   poll: 0
 
@@ -97,7 +97,7 @@
   until: windows_instances.finished
   retries: 300
   with_items:
-      - "{{ windows1_jobs.results }}"
+      - "{{ windows_jobs.results }}"
 
 ################### Enable WinRM and Disable Windows Firewall ###################
 
