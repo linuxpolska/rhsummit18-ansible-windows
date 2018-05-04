@@ -9,4 +9,4 @@ Duration: ~ 20 minutes.
 * Edit the `azure.yml` file and fill in the credential details required for Azure API access.
 * Run `deploy.sh` script on your `rhel7ansible` VM.
 
-The script will provision a set of Azure resources along with a single Windows 2016 VM. The details of the machine will be saved to `inventory.txt` file in your local git repository folder.
+The script will provision a set of Azure resources along with a couple of Windows 2016 VM. The details of the machine will be saved to `inventory.txt` file in your local git repository folder.
