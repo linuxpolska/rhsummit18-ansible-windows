@@ -60,8 +60,8 @@
     name: "{{ name_prefix + '-w1'}}"
     vm_size: "{{ azure_windows_instance_type }}"
     storage_account_name: "{{ azure_storage_account }}"
-    admin_username: "{{ azure_admin_user }}"
-    admin_password: "{{ azure_admin_pass }}"
+    admin_username: "{{ windows_user }}"
+    admin_password: "{{ windows_pass }}"
     started: True
     os_type: Windows
     state: present
@@ -136,8 +136,8 @@
     ansible_host: "{{ item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
     private_ip:  "{{ item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress }}"
     ansible_port: 5985
-    ansible_user: "{{ azure_admin_user }}"
-    ansible_password: "{{ azure_admin_pass }}"
+    ansible_user: "{{ windows_user }}"
+    ansible_password: "{{ windows_pass }}"
     ansible_connection: "winrm"
     ansible_winrm_transport: "ntlm"
     ansible_winrm_server_cert_validation: "ignore"
@@ -146,7 +146,7 @@
 
 ################### Create Inventories ###################
 
-- name: Generate student inventories
+- name: Generate inventories
   template:
     src: instances.txt.j2
     dest: ../instances.txt

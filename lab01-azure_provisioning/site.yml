@@ -10,4 +10,4 @@
     teardown: false
   tasks:
   - include_role:
-      name: "manage-{{ instance_loc }}-instances"
+      name: "manage-azure-instances"
