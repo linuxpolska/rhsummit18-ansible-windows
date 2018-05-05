@@ -61,7 +61,7 @@
     vm_size: "{{ azure_windows_instance_type }}"
     storage_account_name: "{{ azure_storage_account }}"
     admin_username: "{{ windows_user }}"
-    admin_password: "{{ windows_pass }}"
+    admin_password: "{{ vault_windows_pass }}"
     started: True
     os_type: Windows
     state: present
