@@ -7,17 +7,6 @@ ansible_winrm_server_cert_validation=ignore
 ansible_port=5986
 
 [windows]
-{% for host in hostvars %}
+{% for host in groups['windows'] %}
 {{ host }} ansible_host={{ hostvars[host].ansible_host }} ansible_user={{ hostvars[host].ansible_user }}  ansible_password="{{ hostvars[host].ansible_password }}"
-{% endfor %}
-
-{% for group in groups %}
-[{{group}}]
-{%   for entry in groups[group] %}
-{%     for host in hostvars %}
-{%       if entry == host %}
-{{ host }}
-{%       endif %}
-{%     endfor %}
-{%   endfor %}
 {% endfor %}
