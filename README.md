@@ -28,7 +28,7 @@ You will find detailed instruction below and a generic <a href="https://www.micr
 * Apply for a new email address in @outlook.com domain.
 * Enter the username of your choice (should be relatively short).
 * Set the password and confirm.
-* STOP! do not continue with account setup.
+* STOP! Do not continue with account setup.
 
 ##### Redeem Azure Pass promo code _(takes ~ 5 minutes)_
 * Enter https://www.microsoftazurepass.com/ and `Start` evaluation.
@@ -72,7 +72,7 @@ You will find detailed instructions below with a generic <a href="https://docs.m
 
 Your "ansible" application credentials will enable you to provision Azure resources with Ansible.
 
-##### Verify written down Ansible application credentials _(takes ~ 1 minute)_
+##### Verify written down "ansible" application credentials _(takes ~ 1 minute)_
 Azure property name | Ansible module parameter | written down value
 --- | --- | ---
 application id | azure_client_id |
@@ -88,7 +88,9 @@ You can check the VM in Azure Portal entering `Virtual Machines` and selecting `
 Ssh access is available via public IP as _**ansible**_ user with password of your choice.
 Azure template installs Python, Ansible with Windows modules and dependencies. It also clones this github repository.
 
-### Clean up after the Workshop
-#### Remove deployed Azure resources
-#### Close Azure account
-#### Close outlook.com account
+### After the Workshop
+#### Stoping and starting Azure resources
+#### Clean up
+##### Remove deployed Azure resources
+##### Close Azure account
+##### Close outlook.com account
