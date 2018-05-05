@@ -15,7 +15,7 @@ ansible_port=5986
 [{{group}}]
 {%   for entry in groups[group] %}
 {%     for host in hostvars %}
-{%       if entry == host %}    
+{%       if entry == host %}
 {{ host }}
 {%       endif %}
 {%     endfor %}

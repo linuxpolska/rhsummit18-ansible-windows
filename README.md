@@ -92,5 +92,8 @@ Azure template installs Python, Ansible with Windows modules and dependencies. I
 #### Stoping and starting Azure resources
 #### Clean up
 ##### Remove deployed Azure resources
+
+Go to ```lab01-azure_provisioning``` and run ```./teardown.sh``` script.
+
 ##### Close Azure account
 ##### Close outlook.com account

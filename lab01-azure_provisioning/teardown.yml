@@ -1,0 +1,22 @@
+---
+- name: Provision Instances
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - [ 'vars/custom.yml', 'vars/main.yml' ]
+  tags:
+    - manage-instances
+  vars:
+    teardown: false
+  tasks:
+  - name: Azure | Destroy resource group
+    azure_rm_resourcegroup:
+      client_id: "{{ azure_client_id }}"
+      secret: "{{ azure_secret }}"
+      subscription_id: "{{ azure_subscription_id }}"
+      tenant: "{{ azure_tenant }}"
+      name: "{{ azure_resource_group }}"
+      location: "{{ azure_location }}"
+      state: absent
+      force: yes
+
