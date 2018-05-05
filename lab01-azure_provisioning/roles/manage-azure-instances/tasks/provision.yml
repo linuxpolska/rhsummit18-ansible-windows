@@ -78,7 +78,6 @@
     tags:
       Name: "{{ name_prefix + '-w' + item }}"
       App: AnsibleWorkshop
-      User: "{{ user_prefix }}"
     image:
       publisher: "{{ azure_win_publisher }}"
       offer: "{{ azure_win_offer }}"
