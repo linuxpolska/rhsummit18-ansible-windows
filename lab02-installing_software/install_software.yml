@@ -1,0 +1,21 @@
+---
+- name: Install Software
+  win_chocolatey:
+    name: "{{ item }}"
+  with_items:
+    - visualstudiocode
+    - git
+    - putty.install
+    - firefox
+    - googlechrome
+    - winscp
+    - atom
+    - notepadplusplus.install
+    - sublimetext3
+
+- name: Add Putty Shortcut to administrator desktop
+  win_shortcut:
+    description: PuTTY
+    src: '%ProgramFiles%\PuTTY\putty.exe'
+    dest: '%Public%\Desktop\Putty.lnk'
+    directory: '%ProgramFiles%\PuTTY\'

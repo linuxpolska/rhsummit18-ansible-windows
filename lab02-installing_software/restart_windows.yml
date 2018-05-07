@@ -1,0 +1,4 @@
+---
+- name: Reboot Windows
+  win_reboot:
+    post_reboot_delay: 180
