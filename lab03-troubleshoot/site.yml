@@ -1,0 +1,15 @@
+- name: Install login banner
+  hosts: workshop-w1
+  vars:
+    banner:
+    - key: legalnoticecaption
+      val: Hello Summit!
+    - key: legalnoticetext
+      val: Ansible and Windows rocks!
+  tasks:
+    - name: Set registry
+      win_regedit:
+        name:  item.key
+        value: item.val
+        type:  multistring
+      with_items: "{{ banner }}"
