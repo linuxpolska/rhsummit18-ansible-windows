@@ -1,0 +1,4 @@
+---
+# defaults file for roles/chocolatey_server
+
+chocolatey_server_api: SuperSecretChocolateyAPIKey

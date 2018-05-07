@@ -1,0 +1,4 @@
+- name: Configure Package Management Server
+  hosts: workshop-w2
+  roles:
+  - { role: chocolatey_server }
