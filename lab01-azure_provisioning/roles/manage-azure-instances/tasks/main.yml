@@ -1,1 +1,151 @@
-- include_tasks: provision.yml
+---
+# Create a resource group
+- name: Azure | Create a resource group
+  azure_rm_resourcegroup:
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_secret }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    tenant: "{{ azure_tenant }}"
+    name: "{{ azure_resource_group }}"
+    location: "{{ azure_location }}"
+    state: present
+
+# Create a storage account
+- name: Azure | Create a storage account
+  azure_rm_storageaccount:
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_secret }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    tenant: "{{ azure_tenant }}"
+    resource_group: "{{ azure_resource_group }}"
+    name: "{{ azure_storage_account }}"
+    account_type: "{{ azure_storage_account_type }}"
+    state: present
+
+# Create a virtual network
+- name: Azure | Create virtual network
+  azure_rm_virtualnetwork:
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_secret }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    tenant: "{{ azure_tenant }}"
+    resource_group: "{{ azure_resource_group }}"
+    name: "{{ azure_virtual_network }}"
+    address_prefixes_cidr:
+        - "{{ ptr_zone_cidr }}"
+    dns_servers:
+        - "8.8.8.8"
+  register: virtual_network_facts
+
+# Create a subnet and associate with the virtual network
+- name: Create a subnet
+  azure_rm_subnet:
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_secret }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    tenant: "{{ azure_tenant }}"
+    resource_group: "{{ azure_resource_group }}"
+    name: "{{ azure_virtual_subnet }}"
+    virtual_network_name: "{{ azure_virtual_network }}"
+    address_prefix_cidr: "{{ ptr_zone_cidr }}"
+
+################### Build Instances ###################
+- name: Windows | Launch instance
+  azure_rm_virtualmachine:
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_secret }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    tenant: "{{ azure_tenant }}"
+    resource_group: "{{ azure_resource_group }}"
+    name: "{{ name_prefix + '-w' + item }}"
+    vm_size: "{{ azure_windows_instance_type }}"
+    storage_account_name: "{{ azure_storage_account }}"
+    admin_username: "{{ windows_user }}"
+    admin_password: "{{ vault_windows_pass }}"
+    started: True
+    os_type: Windows
+    state: present
+    public_ip_allocation_method: Dynamic
+    virtual_network_name: "{{ azure_virtual_network }}"
+    subnet_name: "{{ azure_virtual_subnet }}"
+    open_ports:
+      - 80
+      - 8080
+      - 443
+      - 5986  # WinRM secure
+      - 5985  # WinRM
+      - 3389  # RDP
+    tags:
+      Name: "{{ name_prefix + '-w' + item }}"
+      App: AnsibleWorkshop
+    image:
+      publisher: "{{ azure_win_publisher }}"
+      offer: "{{ azure_win_offer }}"
+      version: "{{ azure_win_version }}"
+      sku: "{{ azure_win_sku }}"
+  with_sequence: count=2
+  register: windows_jobs
+  async: 7200
+  poll: 0
+
+################### Wait for Jobs ###################
+
+- name: Wait for windows instance creation to complete
+  async_status: jid="{{ item.ansible_job_id }}"
+  register: windows_instances
+  until: windows_instances.finished
+  retries: 300
+  with_items:
+      - "{{ windows_jobs.results }}"
+
+################### Enable WinRM and Disable Windows Firewall ###################
+
+- name: Windows create VM Extension
+  azure_rm_virtualmachine_extension:
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_secret }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    tenant: "{{ azure_tenant }}"
+    resource_group: "{{ azure_resource_group }}"
+    name: disable-firewall
+    virtual_machine_name: "{{ item.invocation.module_args.name }}"
+    publisher: Microsoft.Compute
+    virtual_machine_extension_type: CustomScriptExtension
+    type_handler_version: 1.9
+    settings: '{"commandToExecute": "netsh advfirewall set allprofiles state off && powershell.exe -ExecutionPolicy ByPass -EncodedCommand {{ azure_winrm_enable_script }}"}'
+    auto_upgrade_minor_version: true
+  with_items: "{{ windows_instances.results }}"
+
+################### Wait for Instances ###################
+
+- name: Windows | Wait for WinRM to come up
+  wait_for:
+    host: "{{ item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+    port: 5985
+    delay: 1
+    timeout: 1800
+    state: started
+  with_items: "{{ windows_instances.results }}"
+
+################### Add Hosts ###################
+
+- name: Windows | Add new instance to host group
+  add_host:
+    hostname: "{{ item.invocation.module_args.name }}"
+    ansible_host: "{{ item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+    private_ip:  "{{ item.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress }}"
+    ansible_port: 5985
+    ansible_user: "{{ windows_user }}"
+    ansible_password: "{{ windows_pass }}"
+    ansible_connection: "winrm"
+    ansible_winrm_transport: "ntlm"
+    ansible_winrm_server_cert_validation: "ignore"
+    groups: windows
+  with_items: "{{ windows_instances.results }}"
+
+################### Create Inventories ###################
+
+- name: Generate inventories
+  template:
+    src: instances.txt.j2
+    dest: ../instances.txt
