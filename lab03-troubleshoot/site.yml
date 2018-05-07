@@ -1,5 +1,6 @@
 - name: Install login banner
   hosts: workshop-w1
+  gather_facts: no
   vars:
     banner:
     - key: legalnoticecaption
