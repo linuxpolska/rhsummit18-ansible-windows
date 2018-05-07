@@ -1,6 +1,32 @@
 ---
 # tasks file for roles/chocolatey_server
 
+- name: Ensure IIS is installed
+  win_feature:
+    name: Web-Server
+    state: present
+    include_management_tools: True
+
+- name: Ensure IIS Web-Server and ASP.NET are installed
+  win_feature:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - Web-Server
+    - Web-Asp-Net45
+    - Web-AppInit
+
+- name: Ensure Powershell xWebAdministration module is available
+  win_psmodule:
+    name: xWebAdministration
+    state: present
+
+- name: Ensure Default Web Site is not present
+  win_dsc:
+    resource_name: xWebsite
+    Name: Default Web Site
+    Ensure: Absent
+
 - name: Chocolatey.server package is installed
   win_chocolatey:
     name: "chocolatey.server"
