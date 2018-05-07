@@ -24,25 +24,36 @@ You will find detailed instruction below and a generic <a href="https://www.micr
 
 ##### Register new Azure account _(takes ~ 2 minutes)_
 * Enter https://azure.microsoft.com/en-us/free/ and `Start Free` account.
-* Opt for creating a new account.
-* Apply for a new email address in @outlook.com domain.
+* (Optional - if you already have another account) `Use another account`.
+* Choose to create a new Azure account - `Create one!`.
+* Apply for a new email address in @outlook.com domain by choosing - `Get a new email address`.
 * Enter the username of your choice (should be relatively short).
-* Set the password and confirm.
+* Set the password and confirm with 'Next'.
+* Solve the captcha and confirm that you would like to stay signed in.
 * STOP! Do not continue with account setup.
 
 ##### Redeem Azure Pass promo code _(takes ~ 5 minutes)_
 * Enter https://www.microsoftazurepass.com/ and `Start` evaluation.
-* Double check that your are using just created Azure account.
-* Enter Azure Pass promo code provided by Instructor and hit `Activate`.
-* Accept the policy (first checkbox).
+* Double check that your are using just created Azure account - `Confirm Microsoft Account`.
+* Enter Azure Pass promo code provided by Instructor and hit `Claim promo Code` and then `Activate`.
+* Fill in the forms, accept the policy (first checkbox) and confirm with `Sign up`.
 * Wait for confirmation.
-* Verify that the trial subscription was successfully added to your Azure account by checking `Subscriptions` in Azure Portal (refresh can be sped up by relogging).
+* Verify that the trial subscription was successfully added to your Azure account by checking `Subscriptions` in Azure Portal (`Or get started with your Azure subscription`).
 
 #### Deploy Red Hat Enterprise Linux (RHEL) host with Ansible _(takes ~ 1 minute)_
 Next step is to prepare our basic Ansible environment. You will deploy RHEL based VM with all necessary dependencies.
-Just click `Deploy to Azure` button and provide some additional information through Azure Portal form. Make sure that location is `East US` and you remember the **password**.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flinuxpolska%2Frhsummit18-ansible-windows%2Fmaster%2Fazuredeploy.json"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+
+Just click `Deploy to Azure` button and provide additional information through Azure Portal form:
+* Subscription: `Azure Pass`
+* Resource group: Create new : `ansiblerg`
+* Location: `East US`
+* Admin Password: choose your **password**.
+
+Check `Agree to the terms and conditions stated above` and confirm with `Purchase`.
+
+_Note: these resources will be covered with Free Azure Pass credits._
 
 #### Create MS Azure app credentials and set required privileges
 The following workshop exercises require us to provision Azure resources with Ansible modules.
@@ -52,25 +63,26 @@ You will find detailed instructions below with a generic <a href="https://docs.m
 ##### Register the ansible application with Azure Active Directory _(takes ~ 3 minutes)_
 
 * In Azure Portal enter `Azure Active Directory` / `App registrations` / `New App Registration` and fill in the form with:
-  - name: "ansible",
-  - type: "web/api",
-  - url: "http://ansible.net".
+  - name: `ansible`,
+  - type: `Web app / API`,
+  - url: `http://ansible.net` _(or any URL)_.
+* Hit `Create`.
 * Write down **application id** (for future reference it will be **azure_client_id**).
 * Enter `Settings` / `Keys` and fill in the first row with:
-  - description: "ansible",
-  - expires: "1y",
+  - description: `ansible`,
+  - expires: `Never expires`.
 * Hit `Save` and write down key **Value** (for future reference it will be **azure_secret**)
-* Enter `Active Directory` / `Properties` and write down **Directory ID** (for future reference it will be **azure_tenant**)
+* Enter `Azure Active Directory` / `Properties` and write down **Directory ID** (for future reference it will be **azure_tenant**)
 
 ##### Authorize the ansible application to manage resources _(takes ~ 1 minute)_
-* Enter `Subscriptions` / `Azure ...` and write down **Subscription ID** (for future reference it will be **azure_subscription_id**).
-* Enter `...(IAM)` / `Add` and fill in the form with:
-  - Role: owner,
-  - access: ad user,
-  - choose: ansible
-* Hit `Save`.
+* Enter `Subscriptions` / `Azure Pass` and write down **Subscription ID** (for future reference it will be **azure_subscription_id**).
+* Enter `Access Control (IAM)` / `Add` and fill in the form with:
+  - Role: `owner`,
+  - Assign access to: `Azure AD user, group, or application`,
+  - Select: `ansible`,
+* Click `ansible` and hit `Save`.
 
-Your "ansible" application credentials will enable you to provision Azure resources with Ansible.
+Your `ansible` application credentials will enable you to provision Azure resources with Ansible.
 
 ##### Verify written down "ansible" application credentials _(takes ~ 1 minute)_
 Azure property name | Ansible module parameter | written down value
@@ -82,7 +94,7 @@ Directory ID | azure_tenant |
 
 
 #### Verify that all resources are set correctly (takes ~ 2 minute)
-The Azure deployment template should prepare a single RHEL virtual machine (rhel7ansible) and install the necessary tools.
+The Azure deployment template should prepare a single RHEL virtual machine `rhel7ansible` and install the necessary tools.
 
 You can check the VM in Azure Portal entering `Virtual Machines` and selecting `rhel7ansible`.
 Ssh access is available via public IP as _**ansible**_ user with password of your choice.
