@@ -16,8 +16,8 @@ azure_subscription_id: ''
 azure_tenant: ''
 azure_location: 'eastus'
 ```
-* Create an encrypted password for `ansible` user that will be created on Windows VM. Just edit `./secrets.yml` and input the password of your choice. **NOTE: We will be looking at this password in plaintext later on so do not use a sensitive value.**
-* Next encrypt the contents issuing `ansible-vault encrypt ./secrets.yml` command and providing you encryption password.
+* Create an encrypted password for `ansible` user that will be created on Windows VM. Just edit `secrets.yml` and input the password of your choice. **NOTE: We will be looking at this password in plaintext later on so do not use a sensitive value.**
+* Next encrypt the contents issuing `ansible-vault encrypt secrets.yml` command and providing you encryption password.
 * Change directory to `~/rhsummit18-ansible-windows/lab01-azure_provisioning`
 * Run `deploy.sh` script on your `rhel7ansible` VM.
 The script will provision a set of Azure resources along with a couple of Windows 2016 VM. The details of the machine will be saved to `../inventory.txt` file in your local git repository folder.
