@@ -30,4 +30,4 @@ Test whether communication with instances is successful: ```ansible -i ../instan
 
 ##### Connect to Windows VM with RDP client
 
-You can quickly connect to the VM by clicking `Connect` icon for RDP connection shortcut. The username `ansible` is set in `vars/main.yml` file under `windows_user`.
+You can quickly connect to the VM by clicking `Connect` icon for RDP connection shortcut. The username `ansible` is set in `vars/main.yml` file under `windows_user` and password was set in `../secrets.yml` file.
