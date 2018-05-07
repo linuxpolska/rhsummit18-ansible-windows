@@ -10,7 +10,8 @@
   tasks:
     - name: Set registry
       win_regedit:
-        name:  item.key
-        value: item.val
-        type:  multistring
+        path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+        name: item.key
+        val:  item.val
+        type: multistring
       with_items: "{{ banner }}"
