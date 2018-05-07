@@ -1,4 +1,33 @@
 - name: Configure Package Management Server
   hosts: workshop-w2
   roles:
-  - { role: chocolatey_server }
+  - { role: chocolatey_server, chocolatey_server_api: SuperSecretChocolateyAPIKey }
+
+- name: Populate server with packages
+  hosts: workshop-w2
+  vars:
+    packages:
+    - https://chocolatey.org/api/v2/package/chocolatey-core.extension/1.3.3
+    - https://chocolatey.org/api/v2/package/Firefox/59.0.3
+  tasks:
+  - name: Download packages
+    win_get_url:
+      url: "{{ item }}"
+      dest: "{{ ansible_env['TEMP'] }}\\{{ item | win_basename }}.nupkg"
+    with_items: "{{ packages }}"
+
+  - name: Deploy packages
+    win_command: "choco push {{ ansible_env['TEMP'] }}\\{{ item | win_basename }}.nupkg --source http://127.0.0.1/chocolatey --api-key=SuperSecretChocolateyAPIKey --force"
+    with_items: "{{ packages }}"
+
+- name: Install packages from local repository
+  hosts: workshop-w1
+  vars:
+    packages:
+    - firefox
+  tasks:
+  - name: Install packages
+    win_chocolatey:
+      name: "{{ item }}"
+      source: "http://{{ hostvars['workshop-w2']['ansible_host'] }}/chocolatey"
+    with_items: "{{ packages }}"
