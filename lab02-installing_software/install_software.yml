@@ -5,7 +5,7 @@
   - win_chocolatey:
       name: "{{ item }}"
     with_items:
-      - visualstudiocode
+      #- visualstudiocode
       - git
 
 - name: Install Software
@@ -15,7 +15,7 @@
       name: "{{ item }}"
     with_items:
       - firefox
-      - atom
+      #- atom
 
 - name: Install Software
   hosts: windows
@@ -25,7 +25,7 @@
     with_items:
       - putty.install
       #- googlechrome
-      - winscp
+      #- winscp
       #- notepadplusplus.install
       #- sublimetext3
 
