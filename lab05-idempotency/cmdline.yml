@@ -1,0 +1,16 @@
+---
+- name: Create app with commandline
+  hosts: workshop-w2
+  vars_files: 
+  - vars.yml
+  tasks:
+  - name: Create app dir
+    win_file:
+      path: "{{ app.dir }}"
+      state: directory
+  - name: Execute APPCMD
+    raw: c:\windows\\system32\inetsrv\APPCMD add site /name:{{ app.name }} /bindings:"http/*:{{ app.port }}:" /physicalPath:"{{ app.dir }}"
+    register: output
+  - name: Display results
+    debug:
+      var: output

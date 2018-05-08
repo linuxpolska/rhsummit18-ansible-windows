@@ -1,0 +1,21 @@
+---
+- name: Create app with DSC
+  hosts: workshop-w2
+  vars_files: 
+  - vars.yml
+  tasks:
+  - name: Create app dir
+    win_file:
+      path: "{{ app.dir }}"
+      state: directory
+  - name: Execute native IIS module
+    win_iis_website:
+      name: "{{ app.name }}"
+      state: started
+      port: "{{ app.port }}"
+      application_pool: "{{ app.name }}"
+      physical_path: "{{ app.dir }}"
+    register: output
+  - name: Display results
+    debug:
+      var: output

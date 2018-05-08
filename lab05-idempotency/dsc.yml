@@ -1,0 +1,33 @@
+---
+- name: Create app with DSC
+  hosts: workshop-w2
+  vars_files:
+  - vars.yml
+  tasks:
+  - name: Create app dir
+    win_file:
+      path: "{{ app.dir }}"
+      state: directory
+  - name: Ensure Powershell xWebAdministration module is available
+    win_psmodule:
+      name: xWebAdministration
+      state: present
+  - name: Execute xWebsite DSC
+    win_dsc:
+      resource_name: xWebsite
+      Name: "{{ app.name }}"
+      Ensure: present
+      BindingInfo:
+        Protocol: http
+        #Port: "{{ app.port | int }}"
+        Port: 81
+      ApplicationPool: "{{ app.name }}"
+      PreloadEnabled: true
+      ServiceAutoStartEnabled: true
+      AuthenticationInfo:
+        Anonymous: true
+      PhysicalPath: "{{ app.dir }}"
+    register: output
+  - name: Display results
+    debug:
+      var: output

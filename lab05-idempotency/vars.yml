@@ -1,0 +1,5 @@
+---
+app:
+  name: MyNewSite
+  port: 81
+  dir:  C:\MyNewSite
