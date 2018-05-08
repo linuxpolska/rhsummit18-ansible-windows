@@ -1,7 +1,9 @@
+---
 - name: Configure Package Management Server
   hosts: workshop-w2
   roles:
-  - { role: chocolatey_server, chocolatey_server_api: SuperSecretChocolateyAPIKey }
+  - role: chocolatey_server
+    chocolatey_server_api: SuperSecretChocolateyAPIKey
 
 - name: Populate server with packages
   hosts: workshop-w2
@@ -15,7 +17,6 @@
       url: "{{ item }}"
       dest: "{{ ansible_env['TEMP'] }}\\{{ item | win_basename }}.nupkg"
     with_items: "{{ packages }}"
-
   - name: Deploy packages
     win_command: "choco push {{ ansible_env['TEMP'] }}\\{{ item | win_basename }}.nupkg --source http://127.0.0.1/chocolatey --api-key=SuperSecretChocolateyAPIKey --force"
     with_items: "{{ packages }}"

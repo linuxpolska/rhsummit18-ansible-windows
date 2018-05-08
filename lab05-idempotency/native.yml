@@ -1,7 +1,7 @@
 ---
 - name: Create app with DSC
   hosts: workshop-w2
-  vars_files: 
+  vars_files:
   - vars.yml
   tasks:
   - name: Create app dir
