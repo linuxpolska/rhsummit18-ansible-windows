@@ -1,6 +1,0 @@
----
-- name: Reboot Windows
-  hosts: windows
-  gather_facts: no
-  tasks:
-  - win_reboot:

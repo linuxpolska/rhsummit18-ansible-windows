@@ -37,3 +37,9 @@
       src: '%ProgramFiles%\PuTTY\putty.exe'
       dest: '%Public%\Desktop\Putty.lnk'
       directory: '%ProgramFiles%\PuTTY\'
+
+- name: Reboot Windows
+  hosts: windows
+  gather_facts: no
+  tasks:
+  - win_reboot:
