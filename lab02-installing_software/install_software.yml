@@ -1,0 +1,45 @@
+---
+- name: Install Software
+  hosts: workshop-w1
+  tasks:
+  - win_chocolatey:
+      name: "{{ item }}"
+    with_items:
+      - visualstudiocode
+      - git
+
+- name: Install Software
+  hosts: workshop-w2
+  tasks:
+  - win_chocolatey:
+      name: "{{ item }}"
+    with_items:
+      - firefox
+      - atom
+
+- name: Install Software
+  hosts: windows
+  tasks:
+  - win_chocolatey:
+      name: "{{ item }}"
+    with_items:
+      - putty.install
+      #- googlechrome
+      - winscp
+      #- notepadplusplus.install
+      #- sublimetext3
+
+- name: Add Putty Shortcut to administrator desktop
+  hosts: windows
+  tasks:
+  - win_shortcut:
+      description: PuTTY
+      src: '%ProgramFiles%\PuTTY\putty.exe'
+      dest: '%Public%\Desktop\Putty.lnk'
+      directory: '%ProgramFiles%\PuTTY\'
+
+- name: Reboot Windows
+  hosts: windows
+  gather_facts: no
+  tasks:
+  - win_reboot:
