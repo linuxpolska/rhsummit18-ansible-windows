@@ -4,6 +4,8 @@
 #### Summary:
 Duration: ~ 20 minutes.
 
+Ansible enables you to provision IaaS resources. This gives You an ability to automate Windows Server provisioning. Let's prepare a set of Windows VMs on Azure. We will use them for the rest of the workshop.
+
 #### Steps:
 ##### Configure Azure access credentials for Ansible
 * Log into `rhel7ansible` VM on Azure with `ssh`.
