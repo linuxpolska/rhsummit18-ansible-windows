@@ -1,6 +1,6 @@
 # And now something completely different: Ansible on Windows
 ## Red Hat Summit 2018 Workshop
-### Lab 05 - Explore idempotence.
+### Lab 05 - Explore idempotence
 
 #### Summary:
 Duration: ~ 20 minutes

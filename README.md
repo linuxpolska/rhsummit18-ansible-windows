@@ -100,12 +100,47 @@ You can check the VM in Azure Portal entering `Virtual Machines` and selecting `
 Ssh access is available via public IP as _**ansible**_ user with password of your choice.
 Azure template installs Python, Ansible with Windows modules and dependencies. It also clones this github repository.
 
+### Workshop Labs
+
+#### Lab 01 [Azure Resources Provisioning with Ansible](lab01-azure_provisioning)
+
+Ansible enables you to provision IaaS resources. This gives You an ability to automate Windows Server provisioning. Let's prepare a set of Windows VMs on Azure. We will use them for the rest of the workshop.
+
+#### Lab 02 [Installing software on Windows with Ansible and Chocolatey](lab02-installing_software)
+
+You will install some software on your Windows VMs. We'll use `Chocolatey` package manager and download the software from public repository. Thanks to `win_chocolatey` Ansible module the operation is simple and the module handles all necessary prerequisites and dependencies for us.
+
+#### Lab 03 [Troubleshooting Ansible Windows modules](lab03-troubleshoot)
+
+Let's go through some Windows specific module challenges that you may encounter during your adventure with Ansible in the Windows realm.
+
+#### Lab 04 [Create local Chocolatey repository](lab04-local_repository)
+
+In most corporate environments we need to maintain internal repositories with software that we use for deployments. You will deploy local Chocolatey repository on `workshop-w2` Windows VM and install `Firefox` on `workshop-w1`.
+
+#### Lab 05 [Explore idempotence](lab05-idempotence)
+
+`Idempotence` is a term that describes a quality that enables us to run Ansible playbook consecutively and get the same predictable result every time.
+
+There is usually more than one way to achieve desired results. Let's explore different approaches to deploying an IIS site and their consequences for idempotence.
+
 ### After the Workshop
 #### Stoping and starting Azure resources
+
+You may wish to stop your Azure VMs to decrease the pace at which your credits are being depleted. Please inspect Azure Portal's `Virtual Machines` and check your options for stopping and starting the VMs.
+
 #### Clean up
 ##### Remove deployed Azure resources
 
 Go to ```lab01-azure_provisioning``` and run ```./teardown.sh``` script.
 
+In Azure Portal choose `Resource Groups` and remove the `ansiblerg` resource group.
+
 ##### Close Azure account
+
+Please use the instructions from [Cancel your subscription for Azure](https://docs.microsoft.com/en-us/azure/billing/billing-how-to-cancel-azure-subscription)
+ to close your Azure account.
+
 ##### Close outlook.com account
+
+Please use the instructions from [How to close your Microsoft account](https://support.microsoft.com/en-us/help/12412/microsoft-account-how-to-close-account) to close your Outlook.com account.
