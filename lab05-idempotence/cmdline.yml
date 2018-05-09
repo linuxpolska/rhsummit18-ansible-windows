@@ -9,7 +9,7 @@
       path: "{{ app.dir }}"
       state: directory
   - name: Execute APPCMD
-    raw: c:\windows\\system32\inetsrv\APPCMD add site /name:{{ app.name }} /bindings:"http/*:{{ app.port }}:" /physicalPath:"{{ app.dir }}"
+    raw: c:\windows\system32\inetsrv\APPCMD add site /name:{{ app.name }} /bindings:"http/*:{{ app.port }}:" /physicalPath:"{{ app.dir }}"
     register: output
   - name: Display results
     debug:
