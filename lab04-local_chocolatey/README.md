@@ -15,7 +15,7 @@ Change to `lab04-local_chocolatey` directory.
 
 Run `setup.sh` to deploy `chocolatey_server` Ansible role on `workshop-w2` Windows VM.
 
-Next inspect the `site.yml`. The playbook runs the following.
+Next inspect the `site.yml`. The playbook does the following.
 
 ###### Runs the `chocolatey_server` Ansible role
 
