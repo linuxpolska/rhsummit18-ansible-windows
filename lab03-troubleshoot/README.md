@@ -11,6 +11,8 @@ Let's go through some Windows specific module challenges that you may encounter 
 
 ##### Deploy Windows banner with Ansible `win_regedit` module
 
+Change to `lab03-troubleshoot` directory.
+
 You will set a Windows registry key `legalnoticecaption` on both of the machines. For `workshop-w1` the welcome banner will state `Hello Summit!` and for `workshop-w2` it will welcome you with `Ansible and Windows rocks!`.
 
 In order to achieve it `site.yml` calls `win_regedit` module with parameters:
