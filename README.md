@@ -114,7 +114,7 @@ You will install some software on your Windows VMs. We'll use `Chocolatey` packa
 
 Let's go through some Windows specific module challenges that you may encounter during your adventure with Ansible in the Windows realm.
 
-#### Lab 04 [Create local Chocolatey repository](lab04-local_repository)
+#### Lab 04 [Create local Chocolatey repository](lab04-local_chocolatey)
 
 In most corporate environments we need to maintain internal repositories with software that we use for deployments. You will deploy local Chocolatey repository on `workshop-w2` Windows VM and install `Firefox` on `workshop-w1`.
 
