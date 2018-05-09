@@ -28,18 +28,14 @@
       #- winscp
       #- notepadplusplus.install
       #- sublimetext3
+    notify: Reboot
 
-- name: Add Putty Shortcut to administrator desktop
-  hosts: windows
-  tasks:
   - win_shortcut:
       description: PuTTY
       src: '%ProgramFiles%\PuTTY\putty.exe'
       dest: '%Public%\Desktop\Putty.lnk'
       directory: '%ProgramFiles%\PuTTY\'
 
-- name: Reboot Windows
-  hosts: windows
-  gather_facts: no
-  tasks:
-  - win_reboot:
+  handlers:
+  - name: Reboot
+    win_reboot:
