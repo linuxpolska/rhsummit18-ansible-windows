@@ -22,13 +22,13 @@ azure_location: 'eastus'
 * Next encrypt the contents issuing `ansible-vault encrypt secrets.yml` command and providing you encryption password.
 * Change directory to `~/rhsummit18-ansible-windows/lab01-azure_provisioning`
 * Run `deploy.sh` script on your `rhel7ansible` VM.
-The script will provision a set of Azure resources along with a couple of Windows 2016 VM. The details of the machine will be saved to `../inventory.txt` file in your local git repository folder.
+The script will provision a set of Azure resources along with a couple of Windows 2016 VM. The details of the machine will be saved to `../instances.txt` file in your local git repository folder.
 
 ##### Wait for the script to complete
 The script takes ~ 10 minutes to provision required resources. Let's see the Ansible playbooks that are called by the script.
 
 ##### Verify that Windows VM was deployed successfully
-`../inventory.txt` file created in your local git repo contains IP address of your Windows VMs. You can verify it through Azure Portal: `Virtual Machines` and looking for public IP address of selected VMs.
+`../instances.txt` file created in your local git repo contains IP address of your Windows VMs. You can verify it through Azure Portal: `Virtual Machines` and looking for public IP address of selected VMs.
 
 Test whether communication with instances is successful: ```ansible -i ../instances.txt -m win_ping windows```
 
