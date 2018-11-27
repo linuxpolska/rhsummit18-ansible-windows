@@ -5,6 +5,10 @@ Instructors:
 * Konrad Rzentarzewski (konrad.rzentarzewski@linuxpolska.pl)
 * Will Tome (wtome@redhat.com)
 
+### Video
+
+This talk has been recorded during Open Source Day conference in Warsaw (in Polish): https://www.youtube.com/watch?v=wSY87MhKVoc
+
 ### Workshop summary:
 The Workshop is a lightweight introduction to Ansible for Windows deployments automation and configuration tasks. Things were simplified for the purpose of 2 hour workshop format. We will utilize Microsoft Azure resources (courtesy of Microsoft).
 
