@@ -5,6 +5,12 @@ Instructors:
 * Konrad Rzentarzewski (konrad.rzentarzewski@linuxpolska.pl)
 * Will Tome (wtome@redhat.com)
 
+### Polish article
+https://linuxpolska.pl/konfigurowanie-systemow-windows-za-pomoca-ansible-na-platformie-ms-azure/
+
+### Slides from the presentation
+https://bit.ly/ansiblewins
+
 ### Video
 
 This talk has been recorded during Open Source Day conference in Warsaw (in Polish): https://www.youtube.com/watch?v=wSY87MhKVoc
