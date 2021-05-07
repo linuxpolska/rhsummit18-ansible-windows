@@ -47,7 +47,7 @@ You will find detailed instruction below and a generic <a href="https://www.micr
 #### Deploy Red Hat Enterprise Linux (RHEL) host with Ansible _(takes ~ 1 minute)_
 Next step is to prepare our basic Ansible environment. You will deploy RHEL based VM with all necessary dependencies.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flinuxpolska%2Frhsummit18-ansible-windows%2Fmaster%2Fazuredeploy.json"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flinuxpolska%2Frhsummit18-ansible-windows%2Fmaster%2Fazuredeploy.json"><img src="https://aka.ms/deploytoazurebutton"/></a>
 
 Just click `Deploy to Azure` button and provide additional information through Azure Portal form:
 * Subscription: `Azure Pass`
